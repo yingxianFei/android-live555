@@ -204,7 +204,55 @@ LOCAL_SRC_FILES := \
    groupsock/NetAddress.cpp  \
    groupsock/GroupEId.cpp  \
    groupsock/GroupsockHelper.cpp  \
-   groupsock/IOHandlers.cpp  \
-   mediaServer/DynamicRTSPServer.cpp
+   groupsock/IOHandlers.cpp
 
 include $(BUILD_SHARED_LIBRARY)
+################################for live555MediaServer
+include $(CLEAR_VARS)
+LOCAL_MODULE := live555MediaServer
+LOCAL_ARM_MODE := arm
+LOCAL_PRELINK_MODULE := false
+LOCAL_CPPFLAGS := \
+    -DNULL=0 -DSOCKLEN_T=socklen_t -DNO_SSTREAM -DBSD=1 -DNO_SSTREAM -fexceptions -DANDROID -DXLOCALE_NOT_USED -lsupc++ -lstdc++
+	
+LOCAL_C_INCLUDES := \
+    $(LOCAL_PATH) \
+    $(LOCAL_PATH)/BasicUsageEnvironment/include \
+    $(LOCAL_PATH)/BasicUsageEnvironment \
+    $(LOCAL_PATH)/UsageEnvironment/include \
+    $(LOCAL_PATH)/UsageEnvironment \
+    $(LOCAL_PATH)/groupsock/include \
+    $(LOCAL_PATH)/groupsock \
+    $(LOCAL_PATH)/liveMedia/include \
+    $(LOCAL_PATH)/liveMedia \
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_SHARED_LIBRARIES  := liblive555
+LOCAL_SRC_FILES :=  \
+   mediaServer/DynamicRTSPServer.cpp  \
+   mediaServer/live555MediaServer.cpp   
+include $(BUILD_EXECUTABLE)  
+#############################for live555ProxyServer
+include $(CLEAR_VARS)
+LOCAL_MODULE := live555ProxyServer
+LOCAL_ARM_MODE := arm
+LOCAL_PRELINK_MODULE := false
+LOCAL_CPPFLAGS := \
+    -DNULL=0 -DSOCKLEN_T=socklen_t -DNO_SSTREAM -DBSD=1 -DNO_SSTREAM -fexceptions -DANDROID -DXLOCALE_NOT_USED -lsupc++ -lstdc++
+	
+LOCAL_C_INCLUDES := \
+    $(LOCAL_PATH) \
+    $(LOCAL_PATH)/BasicUsageEnvironment/include \
+    $(LOCAL_PATH)/BasicUsageEnvironment \
+    $(LOCAL_PATH)/UsageEnvironment/include \
+    $(LOCAL_PATH)/UsageEnvironment \
+    $(LOCAL_PATH)/groupsock/include \
+    $(LOCAL_PATH)/groupsock \
+    $(LOCAL_PATH)/liveMedia/include \
+    $(LOCAL_PATH)/liveMedia \
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_SHARED_LIBRARIES  := liblive555
+LOCAL_SRC_FILES :=  \
+   proxyServer/live555ProxyServer.cpp
+include $(BUILD_EXECUTABLE)  
